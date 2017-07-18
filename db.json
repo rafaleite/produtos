@@ -1,0 +1,42 @@
+{
+  "produtos": [
+    {
+      "id": 1,
+      "produto": "Sabão",
+      "categoria": 1
+    },
+    {
+      "id": 2,
+      "produto": "Macarrão",
+      "categoria": 2
+    },
+    {
+      "produto": "Skol",
+      "categoria": "3",
+      "id": 3
+    },
+    {
+      "produto": "Vodka",
+      "categoria": "3",
+      "id": 4
+    }
+  ],
+  "categorias": [
+    {
+      "id": 1,
+      "categoria": "Limpeza"
+    },
+    {
+      "id": 2,
+      "categoria": "Alimentos"
+    },
+    {
+      "categoria": "Bebidas",
+      "id": 3
+    },
+    {
+      "id": 4,
+      "categoria": "TESTE 2"
+    }
+  ]
+}
