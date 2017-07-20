@@ -1,57 +1,61 @@
 import React, { Component } from 'react'
-import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 export default class Categoria extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            produtos: [],
-            categoria: {}
+            id: null
         }
 
-        this.loadProdutos = this.loadProdutos.bind(this)
-        this.loadCategoria = this.loadCategoria.bind(this)
+        this.loadData = this.loadData.bind(this)
+        this.renderProdutos = this.renderProdutos.bind(this)
     }
 
     componentWillReceiveProps(newProps) {
-        this.loadCategoria(newProps.match.params.catId)
-        this.loadProdutos(newProps.match.params.catId)
+      if(newProps.match.params.catId !== this.state.id){
+        this.loadData(newProps.match.params.catId)
+      }
     }
 
     componentDidMount() {
-        this.loadCategoria(this.props.match.params.catId)
-        this.loadProdutos(this.props.match.params.catId)
+        this.loadData(this.props.match.params.catId)
+        
     }
 
-    loadProdutos(id) {
-        axios.get('http://localhost:3001/produtos?categoria='+id)
-            .then(res => {
-                this.setState({
-                    produtos: res.data
-                })
-            })
-    }
-
-    loadCategoria(id) {
-        axios.get('http://localhost:3001/categorias/'+id)
-            .then(res => {
-                this.setState({
-                    categoria: res.data
-                })
-            })
+    loadData(id){
+        this.setState({ id })
+        this.props.loadCategoriaById(id)
+        this.props.loadProdutosByCategoria(id)
     }
 
     renderProdutos(produto) {
         return(
-            <p className='well' key={`prod-${produto.id}`}>{produto.produto}</p>
+            <div className='well' key={`prod-${produto.id}`}>
+                {produto.produto}
+                <div>
+                    <button onClick={ () => {this.props.deleteProduto(produto.id)
+                        .then(res => this.loadData(this.props.match.params.catId))
+                    }} >Excluir</button>
+
+                    <Link to={`/produtos/editar/${produto.id}`}>Editar</Link>
+
+                </div>
+            </div>
         )
     }
 
     render() {
         return (
             <div>
-                <h2>{this.state.categoria.categoria}</h2>
-                {this.state.produtos.map(this.renderProdutos)}
+                {this.props.categoria && 
+                    <h2>{this.props.categoria.categoria}</h2>
+                }
+
+                { this.props.produtos.length === 0 &&
+                    <p className='alert alert-danger'>Nenhum Produto Cadastrado</p>
+                }
+                {this.props.produtos.map(this.renderProdutos)}
             </div>
         )
     }

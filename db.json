@@ -6,19 +6,14 @@
       "categoria": 1
     },
     {
-      "id": 2,
-      "produto": "Macarrão",
-      "categoria": 2
-    },
-    {
       "produto": "Skol",
       "categoria": "3",
       "id": 3
     },
     {
-      "produto": "Vodka",
-      "categoria": "3",
-      "id": 4
+      "id": 4,
+      "produto": "Arroz",
+      "categoria": "2"
     }
   ],
   "categorias": [
@@ -33,10 +28,6 @@
     {
       "categoria": "Bebidas",
       "id": 3
-    },
-    {
-      "id": 4,
-      "categoria": "TESTE 2"
     }
   ]
 }

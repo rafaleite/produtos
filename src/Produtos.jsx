@@ -4,6 +4,7 @@ import { Route, Link } from 'react-router-dom'
 import ProdutosHome from './ProdutosHome'
 import Categoria from './Categoria'
 import ProdutoNovo from './ProdutoNovo'
+import ProdutoEditar from './ProdutoEditar'
 
 export default class Produtos extends Component {
     constructor(props) {
@@ -108,7 +109,19 @@ export default class Produtos extends Component {
                 <div className='col-md-10'>
                     <h1>Produtos</h1>
                     <Route exact path={match.url} component={ProdutosHome} />
-                    <Route path={match.url + '/categoria/:catId'} component={Categoria} />
+
+                    <Route path={match.url + '/categoria/:catId'}
+                        render={(props) => {
+                            return (
+                                <Categoria {...props} 
+                                loadCategoriaById={this.props.loadCategoriaById}
+                                loadProdutosByCategoria={this.props.loadProdutosByCategoria}
+                                categoria={this.props.categoria}
+                                produtos={this.props.produtos}
+                                deleteProduto={this.props.deleteProduto} />
+                            )
+                        }} />
+
                     <Route path={match.url + '/novo'} render={(props)=> {
                         return (
                             <ProdutoNovo {...props} 
@@ -116,6 +129,17 @@ export default class Produtos extends Component {
                                 createProduto={this.props.createProduto} />
                         )
                     }} />
+
+                    <Route path={match.url + '/editar/:id'} render={(props)=> {
+                        return (
+                            <ProdutoEditar {...props} 
+                                loadProdutoById={this.props.loadProdutoById}
+                                editProduto={this.props.editProduto} 
+                                categorias={this.props.categorias}/>
+                        )
+                    }} />
+
+
                 </div>
             </div>
         )
